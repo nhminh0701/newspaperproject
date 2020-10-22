@@ -25,7 +25,6 @@ class CategoryAdmin(admin.ModelAdmin):
 
 
 
-
 class CommentInline(admin.TabularInline):
     model = models.Comment
     extra = 1
@@ -50,7 +49,7 @@ class ArticleAdmin(admin.ModelAdmin):
 
 @admin.register(models.Comment)
 class CommentAdmin(admin.ModelAdmin):
-    list_display = ('article', 'user', 'created_at')
+    list_display = ('article', 'user', 'created_at', 'votes')
     list_filter = ('article', 'user', 'created_at')
     inlines = [
         ReplyInline,
@@ -58,22 +57,7 @@ class CommentAdmin(admin.ModelAdmin):
 
 
 
-class ArticleUpvoteInline(admin.TabularInline):
-    model = models.ArticleUpvote
-    extra = 1
-
-
-
-class ArticleDownvoteInline(admin.TabularInline):
-    model = models.ArticleDownvote
-    extra = 1
-
-
-
-@admin.register(models.ArticleVote)
-class ArticleVoteAdmin(admin.ModelAdmin):
-    list_display = ('article', 'upvotes_count', 'downvotes_count')
-    inlines = [
-        ArticleUpvoteInline,
-        ArticleDownvoteInline
-    ]
+@admin.register(models.Reply)
+class ReplyAdmin(admin.ModelAdmin):
+    list_display = ('comment', 'user', 'created_at', 'votes')
+    list_filter = ('comment', 'user', 'created_at')

@@ -41,48 +41,6 @@ class Article(models.Model):
 
 
 
-class ArticleVote(models.Model):
-    article = models.OneToOneField(Article, 
-        on_delete=models.CASCADE, related_name='votes')
-    
-
-    def __str__(self):
-        return self.article.title + ' votes'
-
-
-    def upvotes_count(self):
-        return self.upvotes.count()
-
-
-    def downvotes_count(self):
-        return self.downvotes.count()
-
-
-
-class ArticleUpvote(models.Model):
-    vote = models.ForeignKey(ArticleVote, 
-        on_delete=models.CASCADE, related_name='upvotes')
-    user = models.ForeignKey(User, 
-        on_delete=models.CASCADE, related_name='upvotes')
-
-
-    def __str__(self):
-        return self.vote.article.title + ' upvote by ' + self.user.username
-
-
-
-class ArticleDownvote(models.Model):
-    vote = models.ForeignKey(ArticleVote, 
-        on_delete=models.CASCADE, related_name='downvotes')
-    user = models.ForeignKey(User, 
-        on_delete=models.CASCADE, related_name='downvotes')
-
-
-    def __str__(self):
-        return self.vote.article.title + ' downvote by ' + self.user.username
-
-
-
 class Comment(models.Model):
     user = models.ForeignKey(User, 
         on_delete=models.CASCADE, related_name='comments')
@@ -92,8 +50,17 @@ class Comment(models.Model):
         on_delete=models.CASCADE, related_name='comments')
 
 
+    def save(self, *args, **kwargs):
+        super(Comment, self).save(*args, **kwargs)
+        vote = CommentVote.objects.create(comment=self, 
+            upvotes=0, downvotes=0)
+
+
     def __str__(self):
         return f'Comment {self.pk} for article {self.article}'
+
+
+    
 
 
 
@@ -106,5 +73,35 @@ class Reply(models.Model):
         on_delete=models.CASCADE, related_name='replies')
 
 
+    def save(self, *args, **kwargs):
+        super(Reply, self).save(*args, **kwargs)
+        ReplyVote.objects.create(reply=self,
+            upvotes=0, downvotes=0)
+
+
     def __str__(self):
         return f'Reply {self.pk} for article {self.comment.article}'
+
+
+
+class CommentVote(models.Model):
+    comment = models.OneToOneField(Comment, 
+        on_delete=models.CASCADE, related_name='votes')
+    upvotes = models.PositiveIntegerField()
+    downvotes = models.PositiveIntegerField()
+
+
+    def __str__(self):
+        return f"Up {self.upvotes} - Down {self.downvotes}"
+
+
+
+class ReplyVote(models.Model):
+    reply = models.OneToOneField(Reply,
+        on_delete=models.CASCADE, related_name='votes')
+    upvotes = models.PositiveIntegerField()
+    downvotes = models.PositiveIntegerField()
+
+
+    def __str__(self):
+        return f"Up {self.upvotes} - Down {self.downvotes}"
