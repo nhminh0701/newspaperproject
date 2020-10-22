@@ -25,7 +25,7 @@ class Subcategory(models.Model):
 
 
 class Article(models.Model):
-    thumbnail = models.ImageField(upload_to='%Y/%m/%d/')
+    thumbnail = models.ImageField(upload_to='newspaper/%Y/%m/%d/')
     category = models.ForeignKey(Category, 
         on_delete=models.CASCADE, related_name='articles')
     subcategory = models.ForeignKey(Subcategory, 
