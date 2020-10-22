@@ -47,14 +47,14 @@ class ArticleVote(models.Model):
     
 
     def __str__(self):
-        return article.name + ' votes'
+        return self.article.title + ' votes'
 
 
-    def get_upvotes_count(self):
+    def upvotes_count(self):
         return self.upvotes.count()
 
 
-    def get_downvotes_count(self):
+    def downvotes_count(self):
         return self.downvotes.count()
 
 
@@ -67,7 +67,7 @@ class ArticleUpvote(models.Model):
 
 
     def __str__(self):
-        return vote.article.name + ' upvote by ' + user.username
+        return self.vote.article.title + ' upvote by ' + self.user.username
 
 
 
@@ -79,7 +79,7 @@ class ArticleDownvote(models.Model):
 
 
     def __str__(self):
-        return vote.article.name + ' downvote by ' + user.username
+        return self.vote.article.title + ' downvote by ' + self.user.username
 
 
 
@@ -93,7 +93,7 @@ class Comment(models.Model):
 
 
     def __str__(self):
-        return f'Comment {self.pk} for article {self.article.name}'
+        return f'Comment {self.pk} for article {self.article}'
 
 
 
@@ -102,9 +102,9 @@ class Reply(models.Model):
         on_delete=models.CASCADE, related_name='replies')
     content = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
-    comment = models.ForeignKey(Article, 
+    comment = models.ForeignKey(Comment, 
         on_delete=models.CASCADE, related_name='replies')
 
 
     def __str__(self):
-        return f'Reply {self.pk} for article {self.comment.article.name}'
+        return f'Reply {self.pk} for article {self.comment.article}'
