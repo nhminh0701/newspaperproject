@@ -26,8 +26,10 @@ class Subcategory(models.Model):
 
 class Article(models.Model):
     thumbnail = models.ImageField(upload_to='%Y/%m/%d/')
-    category = models.ForeignKey(Category, on_delete=models.CASCADE, 'articles')
-    subcategory = models.ForeignKey(Subcategory, on_delete=models.CASCADE, 'articles')
+    category = models.ForeignKey(Category, 
+        on_delete=models.CASCADE, related_name='articles')
+    subcategory = models.ForeignKey(Subcategory, 
+        on_delete=models.CASCADE, related_name='articles')
     title = models.CharField(max_length=50)
     author = models.CharField(max_length=20)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -40,7 +42,8 @@ class Article(models.Model):
 
 
 class ArticleVote(models.Model):
-    article = models.OneToOneField(Article, models.CASCADE, 'votes')
+    article = models.OneToOneField(Article, 
+        on_delete=models.CASCADE, related_name='votes')
     
 
     def __str__(self):
@@ -58,8 +61,9 @@ class ArticleVote(models.Model):
 
 class ArticleUpvote(models.Model):
     vote = models.ForeignKey(ArticleVote, 
-        on_delete=models.CASCADE, 'upvotes')
-    user = models.ForeignKey(User, models.CASCADE, 'upvotes')
+        on_delete=models.CASCADE, related_name='upvotes')
+    user = models.ForeignKey(User, 
+        on_delete=models.CASCADE, related_name='upvotes')
 
 
     def __str__(self):
@@ -69,8 +73,9 @@ class ArticleUpvote(models.Model):
 
 class ArticleDownvote(models.Model):
     vote = models.ForeignKey(ArticleVote, 
-        on_delete=models.CASCADE, 'downvotes')
-    user = models.ForeignKey(User, models.CASCADE, 'downvotes')
+        on_delete=models.CASCADE, related_name='downvotes')
+    user = models.ForeignKey(User, 
+        on_delete=models.CASCADE, related_name='downvotes')
 
 
     def __str__(self):
@@ -94,7 +99,7 @@ class Comment(models.Model):
 
 class Reply(models.Model):
     user = models.ForeignKey(User, 
-        on_delete=models.CASCADE, related_name='comments')
+        on_delete=models.CASCADE, related_name='replies')
     content = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     comment = models.ForeignKey(Article, 
