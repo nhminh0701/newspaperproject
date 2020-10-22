@@ -6,6 +6,12 @@
     <title>Document</title>
 </head>
 <body>
-    
+    {{test}}
+    {% for category in categories %}
+        {{category}}
+        {% for subcategory in category.subcategories.all %}
+            {{subcategory}}
+        {% endfor %}
+    {% endfor %}
 </body>
 </html>
