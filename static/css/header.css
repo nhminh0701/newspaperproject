@@ -1,0 +1,179 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+#header a {
+    text-decoration: none;
+    color: #dcdde1;
+}
+
+#header > a {
+    display: block;
+    padding: 20px;
+}
+
+#header ul li {
+    list-style: none;
+}
+
+#header, #header nav.navbar > ul {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+#header {
+    background: #2f3640;
+    color: #dcdde1;
+    padding: 0 20px;
+    align-items: center;
+    position: relative;
+    width: 100vw;
+}
+
+#header nav.navbar {
+    margin-left: 23px;
+    z-index: 3;
+    display: block;
+}
+
+#header nav.navbar li {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+#header nav.navbar .category {
+    padding: 20px;
+    position: relative;
+    transition: 0.4s ease;
+}
+
+#header nav.navbar .category:hover,
+#header a.selecting,
+#header > a:hover {
+    background: #e84118;
+    color: #f5f6fa;
+}
+
+#header nav.navbar li > ul {
+    position: absolute;
+    color: #dcdde1;
+    background-color: #2f3640;
+    border-top: solid 1px #c23616;
+    top: 100%;
+    left: 0;
+    display: none;
+    width: 250px;
+}
+
+#header nav.navbar .subcategory {
+    padding: 10px 20px;
+    position: relative;
+}
+
+#header nav.navbar .subcategory:hover {
+    color: #e84118;
+}
+
+#header nav.navbar > ul > li:hover > ul, 
+#header nav.navbar > ul > li > ul:hover {
+    display: block;
+}
+
+#header .collapsable {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background: #f5f6fa;
+    padding: 20px 0;
+    display: block;
+}
+
+#header .collapsable.collapsed {
+    display: none;
+}
+
+#header .collapsable > ul {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    color: black;
+    row-gap: 24px;
+    column-gap: 20px;
+}
+
+#header .collapsable > ul > li > a {
+    margin-bottom: 1rem;
+    color: #c23616;
+    font-weight: 700;
+    font-size: 1.3em;
+    transition: 0.4s ease;
+    display: block;
+    padding: 0.4rem 20px;
+}
+
+#header .collapsable > ul > li > a:hover {
+    color: #e84118;
+}
+
+#header .collapsable > ul > li > ul a {
+    font-weight: 600;
+    font-size: 1.em;
+    transition: 0.4s ease;
+    display: block;
+    color: #718093;
+    padding: 0.4em 20px;
+}
+
+#header .collapsable > ul > li > ul a:hover {
+    color: #2f3640;
+}
+
+#header .more-btn {
+    display: block;
+}
+
+#header .collapse-toggler {
+    margin-left: auto;
+    display: none;
+}
+
+
+/* responsive */
+@media screen and (max-width: 900px) {
+    #header .collapse-toggler {
+        display: block;
+    }
+
+    #header nav.navbar {
+        display: none;
+    }
+
+    #header .more-btn {
+        display: none;
+    }
+
+    #header .collapsable > ul {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+@media screen and (max-width: 730px) {
+    #header .collapsable > ul {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media screen and (max-width: 550px) {
+    #header .collapsable > ul {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media screen and (max-width: 400px) {
+    #header .collapsable > ul {
+        grid-template-columns: 1fr
+    }
+}

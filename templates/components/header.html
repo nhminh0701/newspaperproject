@@ -1,0 +1,46 @@
+<header id="header">
+    <div id="logo">
+        <a href="{% url 'home' %}">LOGO</a>
+    </div>
+
+    <nav class="navbar">
+        <ul>
+            {% for category in categories %}
+                <li>
+                    <a href="#" class="category">{{category}}</a>
+                    <ul>
+                        {% for subcategory in category.subcategories.all %}
+                            <li>
+                                <a href="#" 
+                                class='subcategory'>{{subcategory}}</a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </li>
+                
+            {% endfor %}
+        </ul>
+    </nav>
+
+    <a href="#" class="more-btn">More</a>
+    <a href="#" class="collapse-toggler">x</a>
+
+    <div class="collapsable collapsed">
+        <ul>
+            {% for category in categories %}
+                <li>
+                    <a href="#" class="category">{{category}}</a>
+                    <ul>
+                        {% for subcategory in category.subcategories.all %}
+                            <li>
+                                <a href="#" 
+                                class='subcategory'>{{subcategory}}</a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </li>
+                
+            {% endfor %}
+        </ul>
+    </div>
+</header>
